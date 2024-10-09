@@ -45,19 +45,16 @@ setInterval(() => {
 }, 1000);
 
 let lastTime = 0; // Variable to store the timestamp from the previous frame
-let baseRate = 1; // Base rate of 1 oil per second initially
-const accelerationRate = 0.1; // Rate at which the base rate increases per second
 
+// Function to update the counter using requestAnimationFrame
 function incrementCounter(currentTime: number) {
     if (lastTime > 0) {
+        // Calculate the time elapsed since the last frame
         const timeElapsed = currentTime - lastTime;
         
-        // Calculate new oil increment based on elapsed time and an increasing rate
-        oilCounter += (baseRate * (timeElapsed / 1000));
-        oilCount.textContent = `Oil counter: ${oilCounter.toFixed(0)}`;
-        
-        // Increase the base rate over time
-        baseRate += (accelerationRate * (timeElapsed / 1000));
+        // Increase the counter by the fractional amount based on elapsed time
+        oilCounter += timeElapsed / 1000; // Add based on seconds elapsed
+        oilCount.textContent = `Oil counter: ${oilCounter.toFixed(2)}`; // Display with two decimal places
     }
 
     // Update the lastTime to the current timestamp
@@ -66,6 +63,9 @@ function incrementCounter(currentTime: number) {
     // Request the next frame
     requestAnimationFrame(incrementCounter);
 }
+
+// Start the animation loop with the initial timestamp set to 0
+requestAnimationFrame(incrementCounter);
 
 // Start the animation loop
 requestAnimationFrame(incrementCounter);
