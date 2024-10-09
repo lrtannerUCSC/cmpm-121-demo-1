@@ -40,10 +40,38 @@ oilCount.textContent = `${oilCounter} Gallons of Oil `;
 
 // Set an interval for incrementing oilCounter every second
 setInterval(() => {
-    oilCounter++;
-    oilCount.textContent = `${oilCounter} Gallons of Oil `;
+  oilCounter++;
+  oilCount.textContent = `${oilCounter} Gallons of Oil `;
 }, 1000);
 
+let lastTime = 0; // Variable to store the timestamp from the previous frame
+let baseRate = 1; // Base rate of 1 oil per second initially
+const accelerationRate = 0.1; // Rate at which the base rate increases per second
+
+function incrementCounter(currentTime: number) {
+    if (lastTime > 0) {
+        const timeElapsed = currentTime - lastTime;
+        
+        // Calculate new oil increment based on elapsed time and an increasing rate
+        oilCounter += (baseRate * (timeElapsed / 1000));
+        oilCount.textContent = `Oil counter: ${oilCounter.toFixed(0)}`;
+        
+        // Increase the base rate over time
+        baseRate += (accelerationRate * (timeElapsed / 1000));
+    }
+
+    // Update the lastTime to the current timestamp
+    lastTime = currentTime;
+
+    // Request the next frame
+    requestAnimationFrame(incrementCounter);
+}
+
+// Start the animation loop
+requestAnimationFrame(incrementCounter);
+
+// Start the animation loop with the initial timestamp set to 0
+requestAnimationFrame(incrementCounter);
 // Append elements to the app container
 app.appendChild(header);
 app.appendChild(oilButton);
