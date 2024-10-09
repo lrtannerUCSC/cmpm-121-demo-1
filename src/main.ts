@@ -28,7 +28,7 @@ oilButton.style.cursor = "pointer";
 // Event listener for button click
 oilButton.addEventListener("click", () => {
   oilCounter++;
-  oilCount.textContent = `Oil counter: ${oilCounter}`;
+  oilCount.textContent = `${oilCounter} Gallons of Oil `;
 });
 
 // Initializing the oil counter
@@ -37,6 +37,12 @@ let oilCounter: number = 0;
 // Creating and styling the oil counter display
 const oilCount = document.createElement("div");
 oilCount.textContent = `${oilCounter} Gallons of Oil `;
+
+// Set an interval for incrementing oilCounter every second
+setInterval(() => {
+    oilCounter++;
+    oilCount.textContent = `${oilCounter} Gallons of Oil `;
+}, 1000);
 
 // Append elements to the app container
 app.appendChild(header);
