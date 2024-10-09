@@ -27,8 +27,8 @@ oilButton.style.cursor = "pointer";
 
 // Event listener for button click
 oilButton.addEventListener("click", () => {
-    oilCounter++;
-    oilCount.textContent = `Oil counter: ${oilCounter}`;
+  oilCounter++;
+  oilCount.textContent = `Oil counter: ${oilCounter}`;
 });
 
 // Initializing the oil counter
