@@ -19,7 +19,6 @@ oilButton.style.padding = "10px 20px";
 oilButton.style.fontSize = "16px";
 oilButton.style.cursor = "pointer";
 
-oilButton.addEventListener("click", () => {
-})
+oilButton.addEventListener("click", () => {});
 
 document.body.appendChild(oilButton);
