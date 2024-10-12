@@ -61,9 +61,6 @@ function incrementCounter(currentTime: number) {
   requestAnimationFrame(incrementCounter);
 }
 
-
-
-
 // creatUpgradeButton
 
 // Function to create an upgrade button with dynamic cost
@@ -154,9 +151,24 @@ function upgradeAction3() {
 }
 
 // Creating 3 different upgrade buttons with their respective costs
-const upgradeButton1 = createUpgradeButton("0.1 Oil/s", 10, upgradeAction1, upgrade1Flavor);
-const upgradeButton2 = createUpgradeButton("2.0 Oil/s", 100, upgradeAction2, upgrade2Flavor);
-const upgradeButton3 = createUpgradeButton("50 Oil/s", 1000, upgradeAction3, upgrade3Flavor);
+const upgradeButton1 = createUpgradeButton(
+  "0.1 Oil/s",
+  10,
+  upgradeAction1,
+  upgrade1Flavor,
+);
+const upgradeButton2 = createUpgradeButton(
+  "2.0 Oil/s",
+  100,
+  upgradeAction2,
+  upgrade2Flavor,
+);
+const upgradeButton3 = createUpgradeButton(
+  "50 Oil/s",
+  1000,
+  upgradeAction3,
+  upgrade3Flavor,
+);
 
 // Create stat display texts
 const oilCountText = document.createElement("div");
