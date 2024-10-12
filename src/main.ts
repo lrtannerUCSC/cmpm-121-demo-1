@@ -61,25 +61,32 @@ function incrementCounter(currentTime: number) {
   requestAnimationFrame(incrementCounter);
 }
 
-// creatUpgradeButton
+// Interface for items
+interface Item {
+  name: string;
+  cost: number;
+  rate: number;
+}
+
+// List of available items
+const availableItems: Item[] = [
+  { name: "Drill Manager", cost: 10, rate: 0.1 },
+  { name: "Price Stabilizer", cost: 100, rate: 2 },
+  { name: "Cartel Collaborator", cost: 1000, rate: 50 }
+];
 
 // Function to create an upgrade button with dynamic cost
-function createUpgradeButton(
-  text: string,
-  cost: number,
-  upgradeAction: () => void,
-  flavorText: string,
-) {
+function createUpgradeButton(item: Item) {
   const button = document.createElement("button");
 
   // Creating a main text element that displays the upgrade text and cost
   const mainText = document.createElement("div");
-  mainText.textContent = `${flavorText} (${cost.toFixed(2)} oil)`;
+  mainText.textContent = `${item.name} (${item.cost.toFixed(2)} oil)`;
   mainText.style.fontSize = "20px"; // Large font size for main text
 
   // Creating a small text element for the purchase count
   const upgradeGrowthText = document.createElement("div");
-  upgradeGrowthText.textContent = `${text}`; // Initial purchase count
+  upgradeGrowthText.textContent = `${item.rate} Oil/s`; 
   upgradeGrowthText.style.fontSize = "14px"; // Smaller font size for purchase count
   upgradeGrowthText.style.marginTop = "5px"; // Space above the purchase count
 
@@ -103,21 +110,22 @@ function createUpgradeButton(
   button.appendChild(purchaseCountText);
 
   let purchaseCount = 0;
+  let currentCost = item.cost;
 
   button.addEventListener("click", () => {
-    if (oilCounter >= cost) {
-      oilCounter -= cost;
+    if (oilCounter >= currentCost) {
+      oilCounter -= currentCost;
       oilCountText.textContent = `Oil counter: ${oilCounter.toFixed(0)}`;
-      upgradeAction();
-      cost *= 1.15;
+      oilGrowthRate += item.rate;
+      currentCost *= 1.15;  // Increase cost for the next purchase
       purchaseCount++;
-      mainText.textContent = `${flavorText} (${cost.toFixed(2)} oil)`;
+      mainText.textContent = `${item.name} (${currentCost.toFixed(2)} oil)`;
       purchaseCountText.textContent = `${purchaseCount} purchases`;
     }
   });
 
   function checkAvailability() {
-    if (oilCounter < cost) {
+    if (oilCounter < currentCost) {
       button.style.backgroundColor = "gray";
     } else {
       button.style.backgroundColor = "#ffcc00"; // Light Orange
@@ -129,46 +137,19 @@ function createUpgradeButton(
   return button;
 }
 
-const upgrade1Growth = 0.1; // 0.1 oil/s
-const upgrade2Growth = 2.0; // 2.0 oil/s
-const upgrade3Growth = 50.0; // 50.0 oil/s
+// Create the upgrade buttons from the available items
+const upgradeContainer = document.createElement("div");
+upgradeContainer.style.position = "absolute";
+upgradeContainer.style.bottom = "0"; // Align to the bottom
+upgradeContainer.style.left = "0"; // Align to the left
+upgradeContainer.style.display = "flex";
+upgradeContainer.style.flexDirection = "column"; // Stack buttons vertically
+upgradeContainer.style.margin = "10px"; // Optional: for padding from the edge
 
-const upgrade1Flavor = "Drill Manager";
-const upgrade2Flavor = "Price Stabilizer";
-const upgrade3Flavor = "Cartel Collaborator";
-
-// Example upgrade actions
-function upgradeAction1() {
-  oilGrowthRate += upgrade1Growth;
-}
-
-function upgradeAction2() {
-  oilGrowthRate += upgrade2Growth;
-}
-
-function upgradeAction3() {
-  oilGrowthRate += upgrade3Growth;
-}
-
-// Creating 3 different upgrade buttons with their respective costs
-const upgradeButton1 = createUpgradeButton(
-  "0.1 Oil/s",
-  10,
-  upgradeAction1,
-  upgrade1Flavor,
-);
-const upgradeButton2 = createUpgradeButton(
-  "2.0 Oil/s",
-  100,
-  upgradeAction2,
-  upgrade2Flavor,
-);
-const upgradeButton3 = createUpgradeButton(
-  "50 Oil/s",
-  1000,
-  upgradeAction3,
-  upgrade3Flavor,
-);
+availableItems.forEach(item => {
+  const upgradeButton = createUpgradeButton(item);
+  upgradeContainer.appendChild(upgradeButton);
+});
 
 // Create stat display texts
 const oilCountText = document.createElement("div");
@@ -190,20 +171,6 @@ statContainer.style.margin = "25px"; // Optional: for padding from the edge
 
 // Append text elements to the statContainer
 statContainer.appendChild(growthRateText);
-
-// Create a container for upgrade buttons
-const upgradeContainer = document.createElement("div");
-upgradeContainer.style.position = "absolute";
-upgradeContainer.style.bottom = "0"; // Align to the bottom
-upgradeContainer.style.left = "0"; // Align to the left
-upgradeContainer.style.display = "flex";
-upgradeContainer.style.flexDirection = "column"; // Stack buttons vertically
-upgradeContainer.style.margin = "10px"; // Optional: for padding from the edge
-
-// Append upgrade buttons to the upgradeContainer
-upgradeContainer.appendChild(upgradeButton1);
-upgradeContainer.appendChild(upgradeButton2);
-upgradeContainer.appendChild(upgradeButton3);
 
 // Append containers to the app container
 app.appendChild(oilCountText);
