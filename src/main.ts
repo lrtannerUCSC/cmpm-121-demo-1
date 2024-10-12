@@ -99,7 +99,9 @@ function createUpgradeButton(
       oilCounter -= cost;
       oilCountText.textContent = `Oil counter: ${oilCounter.toFixed(0)}`;
       upgradeAction();
+      cost *= 1.15;
       purchaseCount++;
+      mainText.textContent = `${text} (${cost} oil)`;
       purchaseCountText.textContent = `${purchaseCount} purchases`;
     }
   });
@@ -121,40 +123,23 @@ const upgrade1Growth = 0.1; // 0.1 oil/s
 const upgrade2Growth = 2.0; // 2.0 oil/s
 const upgrade3Growth = 50.0; // 50.0 oil/s
 
-
-
 // Example upgrade actions
 function upgradeAction1() {
   oilGrowthRate += upgrade1Growth;
-
 }
 
 function upgradeAction2() {
   oilGrowthRate += upgrade2Growth;
-
 }
 
 function upgradeAction3() {
   oilGrowthRate += upgrade3Growth;
-
 }
 
 // Creating 3 different upgrade buttons with their respective costs
-const upgradeButton1 = createUpgradeButton(
-  "0.1 Oil/s",
-  10,
-  upgradeAction1,
-);
-const upgradeButton2 = createUpgradeButton(
-  "2.0 Oil/s",
-  100,
-  upgradeAction2,
-);
-const upgradeButton3 = createUpgradeButton(
-  "50 Oil/s",
-  1000,
-  upgradeAction3,
-);
+const upgradeButton1 = createUpgradeButton("0.1 Oil/s", 10, upgradeAction1);
+const upgradeButton2 = createUpgradeButton("2.0 Oil/s", 100, upgradeAction2);
+const upgradeButton3 = createUpgradeButton("50 Oil/s", 1000, upgradeAction3);
 
 // Create stat display texts
 const oilCountText = document.createElement("div");
