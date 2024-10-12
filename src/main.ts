@@ -61,18 +61,30 @@ function incrementCounter(currentTime: number) {
   requestAnimationFrame(incrementCounter);
 }
 
+
+
+
+// creatUpgradeButton
+
 // Function to create an upgrade button with dynamic cost
 function createUpgradeButton(
   text: string,
   cost: number,
   upgradeAction: () => void,
+  flavorText: string,
 ) {
   const button = document.createElement("button");
 
   // Creating a main text element that displays the upgrade text and cost
   const mainText = document.createElement("div");
-  mainText.textContent = `${text} (${cost} oil)`;
-  mainText.style.fontSize = "32px"; // Large font size for main text
+  mainText.textContent = `${flavorText} (${cost.toFixed(2)} oil)`;
+  mainText.style.fontSize = "20px"; // Large font size for main text
+
+  // Creating a small text element for the purchase count
+  const upgradeGrowthText = document.createElement("div");
+  upgradeGrowthText.textContent = `${text}`; // Initial purchase count
+  upgradeGrowthText.style.fontSize = "14px"; // Smaller font size for purchase count
+  upgradeGrowthText.style.marginTop = "5px"; // Space above the purchase count
 
   // Creating a small text element for the purchase count
   const purchaseCountText = document.createElement("div");
@@ -83,13 +95,14 @@ function createUpgradeButton(
   button.style.backgroundColor = "#ffcc00"; // Light Orange
   button.style.border = "none";
   button.style.color = "black";
-  button.style.padding = "25px 25px"; // Making it bigger
+  button.style.padding = "5px 5px"; // Making it bigger
   button.style.cursor = "pointer";
   button.style.marginBottom = "10px"; // Add space between buttons
   button.style.textAlign = "center"; // Center the text
 
   // Append text elements to the button
   button.appendChild(mainText);
+  button.appendChild(upgradeGrowthText);
   button.appendChild(purchaseCountText);
 
   let purchaseCount = 0;
@@ -101,7 +114,7 @@ function createUpgradeButton(
       upgradeAction();
       cost *= 1.15;
       purchaseCount++;
-      mainText.textContent = `${text} (${cost} oil)`;
+      mainText.textContent = `${flavorText} (${cost.toFixed(2)} oil)`;
       purchaseCountText.textContent = `${purchaseCount} purchases`;
     }
   });
@@ -123,6 +136,10 @@ const upgrade1Growth = 0.1; // 0.1 oil/s
 const upgrade2Growth = 2.0; // 2.0 oil/s
 const upgrade3Growth = 50.0; // 50.0 oil/s
 
+const upgrade1Flavor = "Drill Manager";
+const upgrade2Flavor = "Price Stabilizer";
+const upgrade3Flavor = "Cartel Collaborator";
+
 // Example upgrade actions
 function upgradeAction1() {
   oilGrowthRate += upgrade1Growth;
@@ -137,9 +154,9 @@ function upgradeAction3() {
 }
 
 // Creating 3 different upgrade buttons with their respective costs
-const upgradeButton1 = createUpgradeButton("0.1 Oil/s", 10, upgradeAction1);
-const upgradeButton2 = createUpgradeButton("2.0 Oil/s", 100, upgradeAction2);
-const upgradeButton3 = createUpgradeButton("50 Oil/s", 1000, upgradeAction3);
+const upgradeButton1 = createUpgradeButton("0.1 Oil/s", 10, upgradeAction1, upgrade1Flavor);
+const upgradeButton2 = createUpgradeButton("2.0 Oil/s", 100, upgradeAction2, upgrade2Flavor);
+const upgradeButton3 = createUpgradeButton("50 Oil/s", 1000, upgradeAction3, upgrade3Flavor);
 
 // Create stat display texts
 const oilCountText = document.createElement("div");
