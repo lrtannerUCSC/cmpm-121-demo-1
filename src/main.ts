@@ -66,18 +66,44 @@ interface Item {
   name: string;
   cost: number;
   rate: number;
+  description: string;
 }
 
 // List of available items
 const availableItems: Item[] = [
-  { name: "Drill Manager", cost: 10, rate: 0.1 },
-  { name: "Price Stabilizer", cost: 100, rate: 2 },
-  { name: "Cartel Collaborator", cost: 1000, rate: 50 }
+  { 
+    name: "Drill Manager",
+    cost: 10,
+    rate: 0.1,
+    description: "Automates basic drilling operations to increase output and reduce manpower."
+  },
+  { name: "Price Stabilizer",
+  cost: 100,
+  rate: 2,
+  description: "Employs economic tactics to manage and influence oil prices subtly within the market."
+},
+  { name: "Regulatory Loophole",
+  cost: 300,
+  rate: 10,
+  description: "Exploits legal gray areas to bypass regulations and maximize extraction rates."
+},
+  { name: "Cartel Collaborator",
+  cost: 1000,
+  rate: 50,
+  description: "Forms influential and shadowy alliances with major players to control market movements and suppress competition."
+},
+  { name: "Bribery",
+  cost: 5000,
+  rate: 500,
+  description: "Ensures favorable legislation and market conditions through strategic distribution of resources to key figures."
+},
+
 ];
 
 // Function to create an upgrade button with dynamic cost
 function createUpgradeButton(item: Item) {
   const button = document.createElement("button");
+  button.title = item.description; // Set description as the title for tooltip
 
   // Creating a main text element that displays the upgrade text and cost
   const mainText = document.createElement("div");
@@ -86,7 +112,7 @@ function createUpgradeButton(item: Item) {
 
   // Creating a small text element for the purchase count
   const upgradeGrowthText = document.createElement("div");
-  upgradeGrowthText.textContent = `${item.rate} Oil/s`; 
+  upgradeGrowthText.textContent = `${item.rate} Oil/s`;
   upgradeGrowthText.style.fontSize = "14px"; // Smaller font size for purchase count
   upgradeGrowthText.style.marginTop = "5px"; // Space above the purchase count
 
@@ -117,7 +143,7 @@ function createUpgradeButton(item: Item) {
       oilCounter -= currentCost;
       oilCountText.textContent = `Oil counter: ${oilCounter.toFixed(0)}`;
       oilGrowthRate += item.rate;
-      currentCost *= 1.15;  // Increase cost for the next purchase
+      currentCost *= 1.15; // Increase cost for the next purchase
       purchaseCount++;
       mainText.textContent = `${item.name} (${currentCost.toFixed(2)} oil)`;
       purchaseCountText.textContent = `${purchaseCount} purchases`;
@@ -146,7 +172,7 @@ upgradeContainer.style.display = "flex";
 upgradeContainer.style.flexDirection = "column"; // Stack buttons vertically
 upgradeContainer.style.margin = "10px"; // Optional: for padding from the edge
 
-availableItems.forEach(item => {
+availableItems.forEach((item) => {
   const upgradeButton = createUpgradeButton(item);
   upgradeContainer.appendChild(upgradeButton);
 });
