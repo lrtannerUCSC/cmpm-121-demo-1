@@ -76,7 +76,8 @@ button:focus-visible {
 }
 
 @keyframes heartbeat {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -89,15 +90,15 @@ button:focus-visible {
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: scale(1);        /* Original size */
+  0%,
+  100% {
+    transform: scale(1); /* Original size */
   }
   50% {
-    transform: scale(1.1);      /* Slightly larger */
+    transform: scale(1.1); /* Slightly larger */
   }
 }
 
 .bounce {
-  animation: bounce 0.2s ease-in-out;  /* Adjust timing for speed */
+  animation: bounce 0.2s ease-in-out; /* Adjust timing for speed */
 }
-
